@@ -1,0 +1,37 @@
+<form method='post'>
+  {{ form.as_p }}
+  <button id="user_form" type="submit">送信</button>
+  {% csrf_token %}
+</form>
+<script>
+
+document.querySelector("#user_form").addEventListener("click", function(event) {
+  event.preventDefault();
+  navigator.geolocation.getCurrentPosition(success, error);
+}, false);
+
+function success(position) {
+  let lat = position.coords.latitude;
+  let lan = position.coords.longitude;
+
+  let send_form = document.getElementById('user_form');
+
+  let fld1 = document.createElement("input");
+  fld1.name = "lat";
+  fld1.type = "hidden";
+  fld1.value = lat;
+  send_form.appendChild(fld1);
+
+  let fld2 = document.createElement("input");
+  fld2.name = "lan";
+  fld2.type = "hidden";
+  fld2.value = lan;
+  send_form.appendChild(fld2);
+
+  send_form.submit();
+}
+
+function error(position) {
+  alert('現在位置が取得できません');
+}
+</script>
