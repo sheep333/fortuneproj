@@ -34,7 +34,9 @@ class FortuneBoard(models.Model):
 
     name = models.CharField(choices=board_choices, max_length=255)
     user_type = models.ForeignKey(UserFortuneType,on_delete=models.CASCADE)
-    direction_choices = models.CharField(choices=direction_choices, max_length=255)
+    direction = models.CharField(choices=direction_choices, max_length=255)
+    start_at = models.DateTimeField()
+    end_at = models.DateTimeField()
 
     class Meta:
         models.UniqueConstraint(fields=['name', 'user_type'], name='unique_pos')

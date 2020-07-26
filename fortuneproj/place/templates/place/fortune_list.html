@@ -1,0 +1,12 @@
+{% extends 'place/base.html' %}
+{% block content %}
+あなたのユーザタイプは {{ user_type }} です。
+本日の吉方位は {{ fortune_direction }} です。
+
+吉方位にあるパワースポットリストです。
+<ul>
+{% for spot in spot_list%}
+<li>{{ spot }}</li>
+{% endfor %}
+</ul>
+{% endblock %}

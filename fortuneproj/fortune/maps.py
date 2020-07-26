@@ -1,8 +1,14 @@
 from math import atan2, cos, pi, sin, tan
+from os import getenv
+
+import googlemaps
 
 
 class Map:
     def _azimuth(self, x1, y1, x2, y2):
+        """
+        方位角を計算。地点1からみた地点2の角度を360度で表して返却。
+        """
         # Radian角に修正
         _x1, _y1, _x2, _y2 = x1*pi/180, y1*pi/180, x2*pi/180, y2*pi/180
         Δx = _x2 - _x1
@@ -17,12 +23,21 @@ class Map:
 
     def _get_spot_from_api(self, **kwargs):
         # envからAPI KEYを取得
+        api_key = getenv("MAP_API_KEY")
         # SearchAPIを叩くURLを作成
-        # JSONをListに変換
-        spot_list = []
-        return spot_list
+        gmaps = googlemaps.Client(key=api_key)
+        # 参考API
+        # https://googlemaps.github.io/google-maps-services-python/docs/index.html#googlemaps.Client.places_nearby
+        places = gmaps.places_nearby(
+            location=kwargs["location"], #現在地
+            keyword=spot_name, #検索キーワード
+        )
+        return places["results"]
 
     def _calc_direction(self, here, place):
+        """
+        現在地と場所の緯度経度から現在地からみた場所の方位を返却
+        """
         direction = self._azimuth(here['lan'], here['lat'], place['lan'], place['lat'])
         if (direction > 0 and direction < 45) or (direction > 315 and direction < 360):
             return 'north'
@@ -35,21 +50,16 @@ class Map:
         else:
             return None
 
-    @classmethod
-    def get_match_spot(cls, **kwargs):
-        fortune_spot_list = []
-        # 検索したいパワースポット名
-        spot_name = kwargs['spot_name']
-        # 吉方位
-        direction = kwargs['direction']
+    def get_match_spot(self, **kwargs):
         # 現在地
-        here = kwargs['here']
+        here = kwargs['location']
 
         # 周辺のパワースポットを検索
-        spot_list = cls._get_spot_from_api(spot_name=spot_name)
-        # 条件の合うもののみリストに追加
+        spot_list = self._get_spot_from_api(**kwargs)
+        # 吉方位に合うもののみリストに追加
+        fortune_spot_list = []
         for spot in spot_list:
-            spot_direction = cls._calc_direction(here, spot)
+            spot_direction = self._calc_direction(here, spot)
             if direction == spot_direction:
                 fortune_spot_list.append(spot)
 
