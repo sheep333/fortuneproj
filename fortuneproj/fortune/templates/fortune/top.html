@@ -1,3 +1,5 @@
+{% extends "fortune/base.html" %}
+{% block content %}
 <form method='post'>
   {{ form.as_p }}
   <button id="user_form" type="submit">送信</button>
@@ -5,7 +7,7 @@
 </form>
 <script>
 
-document.querySelector("#user_form").addEventListener("click", function(event) {
+document.querySelector("#user_form").addEventListener("submit", function(event) {
   event.preventDefault();
   navigator.geolocation.getCurrentPosition(success, error);
 }, false);
@@ -35,3 +37,4 @@ function error(position) {
   alert('現在位置が取得できません');
 }
 </script>
+{% endblock %}
