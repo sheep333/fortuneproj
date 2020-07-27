@@ -13,9 +13,9 @@ class Top(FormView):
     success_url = reverse_lazy('fortune:top')
 
     def form_valid(self, form):
-        birthday = form["birthday"]
-        here_lan = form["lan"]
-        here_lat = form["lat"]
+        birthday = form.cleaned_data["birthday"]
+        here_lan = float(self.request.POST["lan"])
+        here_lat = float(self.request.POST["lat"])
         location = [here_lan, here_lat]
 
         # ユーザのタイプと吉方位を返却

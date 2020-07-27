@@ -3,7 +3,7 @@ from django import forms
 
 class UserInfoForm(forms.Form):
     name = forms.CharField(max_length=30)
-    birthday = forms.DateField(
+    birthday = forms.DateTimeField(
         input_formats=('%Y-%m-%d', '%Y/%m/%d')
     )
 

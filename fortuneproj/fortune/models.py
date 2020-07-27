@@ -5,6 +5,7 @@ from django.db import models
 
 class UserFortuneType(models.Model):
     # 生年月日で４パターンに振り分け
+    # FIXME: 選択肢もタプルに変更
     choices = (
         [1, 'moon'],
         [2, 'sun'],
@@ -12,12 +13,16 @@ class UserFortuneType(models.Model):
         [4, 'snow'],
     )
 
-    name = models.CharField(choices=choices, max_length=255)
+    name = models.IntegerField(choices=choices)
+
+    def __str__(self):
+        return self.choices[self.name-1][1]
 
 
 class FortuneBoard(models.Model):
     # 9パターンの盤のどの位置にいるかを返す
     # 例えばmoonタイプはwhiteの盤では北にいる等
+    # FIXME: 選択肢もタプルに変更
     board_choices = (
         [1, 'white'],
         [2, 'red'],
@@ -32,9 +37,9 @@ class FortuneBoard(models.Model):
         [4, 'west'],
     )
 
-    name = models.CharField(choices=board_choices, max_length=255)
-    user_type = models.ForeignKey(UserFortuneType,on_delete=models.CASCADE)
-    direction = models.CharField(choices=direction_choices, max_length=255)
+    name = models.IntegerField(choices=board_choices)
+    user_type = models.ForeignKey(UserFortuneType, on_delete=models.CASCADE)
+    direction = models.IntegerField(choices=direction_choices)
     start_at = models.DateTimeField()
     end_at = models.DateTimeField()
 

@@ -16,7 +16,7 @@ class Fortune:
         return user_type
 
     def check_fortune_direction(self, user_type):
-        date = datetime.now
+        date = datetime.now()
         year = date.year
         month = date.month
         day = date.day
@@ -31,4 +31,5 @@ class Fortune:
             start_at__lte=date,
             end_at__gte=date
         ).get()
+        # FIXME: 文字列もしくはKEYを返却するよう変更
         return fortune_board.direction
