@@ -26,8 +26,6 @@ class Map:
         api_key = getenv("MAP_API_KEY")
         # SearchAPIを叩くURLを作成
         gmaps = googlemaps.Client(key=api_key)
-        # 参考API
-        # https://googlemaps.github.io/google-maps-services-python/docs/index.html#googlemaps.Client.places_nearby
         places = gmaps.places_nearby(
             location=kwargs["location"], #現在地
             keyword=spot_name, #検索キーワード

@@ -7,7 +7,7 @@ from .fortunes import Fortune
 from .maps import Map
 
 
-def Top(FormView):
+class Top(FormView):
     form_class = UserInfoForm
     template_name = 'fortune/top.html'
     success_url = reverse_lazy('fortune:top')
@@ -25,7 +25,7 @@ def Top(FormView):
 
         # 現在地と比較してGoogleMap or Placeモデルから場所を取得
         gmap = Map()
-        # とりあえず固定
+        # とりあえずスポット検索キーワードは固定
         spot_name = "パワースポット"
         fortune_spot_list = gmap.get_match_spot(
             location=location,
