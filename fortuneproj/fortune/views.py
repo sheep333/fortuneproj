@@ -14,9 +14,12 @@ class Top(FormView):
 
     def form_valid(self, form):
         birthday = form.cleaned_data["birthday"]
-        here_lan = float(self.request.POST["lan"])
+        here_lng= float(self.request.POST["lng"])
         here_lat = float(self.request.POST["lat"])
-        location = [here_lan, here_lat]
+        location = {
+            "lng": here_lng,
+            "lat": here_lat
+        }
 
         # ユーザのタイプと吉方位を返却
         fortune = Fortune()

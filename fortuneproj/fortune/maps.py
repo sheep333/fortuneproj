@@ -28,7 +28,9 @@ class Map:
         gmaps = googlemaps.Client(key=api_key)
         places = gmaps.places_nearby(
             location=kwargs["location"], #現在地
-            keyword=spot_name, #検索キーワード
+            keyword=kwargs["spot_name"], #検索キーワード
+            language='ja',
+            radius=100000,
         )
         return places["results"]
 
@@ -36,7 +38,7 @@ class Map:
         """
         現在地と場所の緯度経度から現在地からみた場所の方位を返却
         """
-        direction = self._azimuth(here['lan'], here['lat'], place['lan'], place['lat'])
+        direction = self._azimuth(here['lng'], here['lat'], place['geometry']['location']['lng'], place['geometry']['location']['lat'])
         if (direction > 0 and direction < 45) or (direction > 315 and direction < 360):
             return 'north'
         elif direction > 45 and direction < 135:
@@ -51,6 +53,7 @@ class Map:
     def get_match_spot(self, **kwargs):
         # 現在地
         here = kwargs['location']
+        direction = kwargs['direction']
 
         # 周辺のパワースポットを検索
         spot_list = self._get_spot_from_api(**kwargs)

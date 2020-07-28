@@ -14,7 +14,7 @@ function postData(){
 
 function success(position) {
   let lat = position.coords.latitude;
-  let lan = position.coords.longitude;
+  let lng= position.coords.longitude;
 
   let fld1 = document.createElement("input");
   fld1.name = "lat";
@@ -23,9 +23,9 @@ function success(position) {
   document.user_form.appendChild(fld1);
 
   let fld2 = document.createElement("input");
-  fld2.name = "lan";
+  fld2.name = "lng";
   fld2.type = "hidden";
-  fld2.value = lan;
+  fld2.value = lng;
   document.user_form.appendChild(fld2);
 
   document.user_form.submit();

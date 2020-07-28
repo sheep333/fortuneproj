@@ -43,5 +43,8 @@ class FortuneBoard(models.Model):
     start_at = models.DateTimeField()
     end_at = models.DateTimeField()
 
+    def get_direction(self):
+        return self.direction_choices[self.direction-1][1]
+
     class Meta:
         models.UniqueConstraint(fields=['name', 'user_type'], name='unique_pos')

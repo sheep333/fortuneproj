@@ -31,5 +31,4 @@ class Fortune:
             start_at__lte=date,
             end_at__gte=date
         ).get()
-        # FIXME: 文字列もしくはKEYを返却するよう変更
-        return fortune_board.direction
+        return fortune_board.get_direction()
