@@ -4,7 +4,7 @@ from django.db import models
 class Place(models.Model):
     name = models.CharField(max_length=255)
     text = models.TextField()
-    lan = models.FloatField()
+    lng= models.FloatField()
     lat = models.FloatField()
     attribute = models.CharField(max_length=50)
 

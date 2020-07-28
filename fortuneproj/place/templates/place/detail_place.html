@@ -35,7 +35,7 @@
 </div>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script
-  src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap&libraries=&v=weekly"
+  src="https://maps.googleapis.com/maps/api/js?key={{api_key}}&callback=initMap&libraries=&v=weekly"
   defer
 ></script>
 <style type="text/css">
@@ -52,6 +52,19 @@
     margin: 0;
     padding: 0;
   }
+  #map {
+    position: relative;
+    padding-bottom: 75%; // これが縦横比
+    height: 0;
+    overflow: hidden;
+  }
+  #map iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+  }
 </style>
 <script>
   "use strict";
@@ -65,7 +78,7 @@
   function initMap() {
     const place = {
       lat: {{ place.lat }},
-      lng: {{ place.lan }}
+      lng: {{ place.lng}}
     };
     const map = new google.maps.Map(document.getElementById("map"), {
       scaleControl: true,
